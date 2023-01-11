@@ -8,18 +8,20 @@ from ..basic_game import BasicGame
 from ..basic_features import BasicGameSaveGameInfo
 
 class XMenLegendsIIGame(BasicGame):
-    Name = "X-Men Legends II: Rise of Apocalypse"
-    Author = "UltraMegaMagnus"
-    Version = "0.0.2"
+    Name = "X-Men Legends II Support Plugin"
+    Author = "UltraMegaMagnus and BaconWizard17"
+    Version = "1.0.0"
 
-    GameName = "X-Men Legends II: Rise of Apocalypse"
+    GameName = "X-Men Legends II - Rise of Apocalypse"
     GameShortName = "xml2"
     GameNexusName = "xml2"
+    GameNexusId = 000
+    GameSteamId = 000000
     GameBinary = "xmen2.exe"
     GameDataPath = ""
     GameSaveExtension = "save"
-    GameDocumentsDirectory = r"%DOCUMENTS%/Activision/X-Men Legends 2"
-    GameSavesDirectory = r"%GAME_DOCUMENTS%/Save"
+    GameDocumentsDirectory = "%DOCUMENTS%/Activision/X-Men Legends 2"
+    GameSavesDirectory = "%GAME_DOCUMENTS%/Save"
 
     def executables(self):
         return [
