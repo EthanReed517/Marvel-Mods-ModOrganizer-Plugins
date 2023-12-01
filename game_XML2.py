@@ -11,7 +11,7 @@ from ..basic_features import BasicGameSaveGameInfo
 
 class XMenLegendsIIGame(BasicGame):
     Name = "X-Men Legends II Support Plugin"
-    Author = "UltraMegaMagnus, ak2yny, and BaconWizard17"
+    Author = "UltraMegaMagnus, ak2yny, Rampage, and BaconWizard17"
     Version = "2.0.0"
 
     GameName = "X-Men Legends II - Rise of Apocalypse"

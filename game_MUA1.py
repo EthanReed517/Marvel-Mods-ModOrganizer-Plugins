@@ -11,7 +11,7 @@ from ..basic_features import BasicGameSaveGameInfo
 
 class MarvelUltimateAllianceGame(BasicGame):
     Name = "Marvel - Ultimate Alliance Support Plugin"
-    Author = "MrKablamm0fish, ak2yny, and BaconWizard17"
+    Author = "MrKablamm0fish, ak2yny, Rampage, and BaconWizard17"
     Version = "2.0.0"
 
     GameName = "Marvel - Ultimate Alliance"
