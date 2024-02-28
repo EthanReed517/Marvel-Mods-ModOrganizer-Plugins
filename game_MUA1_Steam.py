@@ -7,12 +7,51 @@ except:
 
 import mobase
 from ..basic_game import BasicGame
-from ..basic_features import BasicGameSaveGameInfo
+
+class MUA1ModDataChecker(mobase.ModDataChecker):
+    def __init__(self):
+        super().__init__()
+        self.validDirNames = [
+            "actors",
+            "automaps",
+            "conversations",
+            "cursors",
+            "data",
+            "dialogs",
+            "effects",
+            "eula",
+            "hud",
+            "maps",
+            "models",
+            "motionpaths",
+            "movies",
+            "packages",
+            "plugins",
+            "SavesDir",
+            "scripts",
+            "Settings",
+            "shaders",
+            "skybox",
+            "sounds",
+            "subtitles",
+            "textures",
+            "ui"
+        ]
+
+    def dataLooksValid(
+        self, tree: mobase.IFileTree
+    ) -> mobase.ModDataChecker.CheckReturn:
+        for entry in tree:
+            if not entry.isDir():
+                continue
+            if entry.name().casefold() in self.validDirNames:
+                return mobase.ModDataChecker.VALID
+        return mobase.ModDataChecker.INVALID
 
 class MarvelUltimateAllianceGame(BasicGame):
     Name = "Marvel - Ultimate Alliance (Steam Version) Support Plugin"
     Author = "MrKablamm0fish, ak2yny, Rampage, and BaconWizard17"
-    Version = "2.0.0"
+    Version = "2.0.1"
 
     GameName = "Marvel - Ultimate Alliance (Steam)"
     GameShortName = "mua1s"
@@ -21,6 +60,14 @@ class MarvelUltimateAllianceGame(BasicGame):
     GameSteamId = 433300
     GameBinary = "marvel.exe"
     GameDataPath = ""
+    GameSaveExtension = "sav"
+    GameDocumentsDirectory = "%USERPROFILE%/AppData/Roaming/Activision/Marvel Ultimate Alliance"
+    GameSavesDirectory = "%GAME_PATH%/SavesDir"
+
+    def init(self, organizer: mobase.IOrganizer) -> bool:
+        super().init(organizer)
+        self._featureMap[mobase.ModDataChecker] = MUA1ModDataChecker()
+        return True
 
     def executables(self):
         return [
@@ -29,4 +76,3 @@ class MarvelUltimateAllianceGame(BasicGame):
                 QFileInfo(self.gameDirectory(), "Marvel.exe"),
             ),
         ]
-
