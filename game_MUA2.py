@@ -7,12 +7,11 @@ except:
 
 import mobase
 from ..basic_game import BasicGame
-from ..basic_features import BasicGameSaveGameInfo
 
 class MarvelUltimateAllianceGame(BasicGame):
     Name = "Marvel - Ultimate Alliance 2 Support Plugin"
     Author = "MrKablamm0fish, ak2yny, Rampage, and BaconWizard17"
-    Version = "2.0.0"
+    Version = "2.0.1"
 
     GameName = "Marvel - Ultimate Alliance 2"
     GameShortName = "mua2"
@@ -21,6 +20,8 @@ class MarvelUltimateAllianceGame(BasicGame):
     GameSteamId = 433320
     GameBinary = "alliance.exe"
     GameDataPath = ""
+    GameSaveExtension = "sav"
+    GameSavesDirectory = "%GAME_PATH%/SavesDir"
 
     def executables(self):
         return [

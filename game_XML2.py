@@ -7,12 +7,47 @@ except:
 
 import mobase
 from ..basic_game import BasicGame
-from ..basic_features import BasicGameSaveGameInfo
+
+class XML2ModDataChecker(mobase.ModDataChecker):
+    def __init__(self):
+        super().__init__()
+        self.validDirNames = [
+            "Actors",
+            "Automaps",
+            "Conversations",
+            "Data",
+            "Dialogs",
+            "Effects",
+            "HUD",
+            "Maps",
+            "Models",
+            "MotionPaths",
+            "Movies",
+            "Packages",
+            "plugins",
+            "Scripts",
+            "Skybox",
+            "Sounds",
+            "Subtitles",
+            "Texs",
+            "Textures",
+            "UI"
+        ]
+
+    def dataLooksValid(
+        self, tree: mobase.IFileTree
+    ) -> mobase.ModDataChecker.CheckReturn:
+        for entry in tree:
+            if not entry.isDir():
+                continue
+            if entry.name().casefold() in self.validDirNames:
+                return mobase.ModDataChecker.VALID
+        return mobase.ModDataChecker.INVALID
 
 class XMenLegendsIIGame(BasicGame):
     Name = "X-Men Legends II Support Plugin"
     Author = "UltraMegaMagnus, ak2yny, Rampage, and BaconWizard17"
-    Version = "2.0.0"
+    Version = "2.0.1"
 
     GameName = "X-Men Legends II - Rise of Apocalypse"
     GameShortName = "xml2"
@@ -25,6 +60,11 @@ class XMenLegendsIIGame(BasicGame):
     GameDocumentsDirectory = "%DOCUMENTS%/Activision/X-Men Legends 2"
     GameSavesDirectory = "%GAME_DOCUMENTS%/Save"
 
+    def init(self, organizer: mobase.IOrganizer) -> bool:
+        super().init(organizer)
+        self._featureMap[mobase.ModDataChecker] = XML2ModDataChecker()
+        return True
+
     def executables(self):
         return [
             mobase.ExecutableInfo(
@@ -32,4 +72,3 @@ class XMenLegendsIIGame(BasicGame):
                 QFileInfo(self.gameDirectory(), "xmen2.exe"),
             ),
         ]
-
