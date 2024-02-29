@@ -47,7 +47,7 @@ class XML2ModDataChecker(mobase.ModDataChecker):
 class XMenLegendsIIGame(BasicGame):
     Name = "X-Men Legends II Support Plugin"
     Author = "UltraMegaMagnus, ak2yny, Rampage, and BaconWizard17"
-    Version = "2.0.1"
+    Version = "2.1.0"
 
     GameName = "X-Men Legends II - Rise of Apocalypse"
     GameShortName = "xml2"

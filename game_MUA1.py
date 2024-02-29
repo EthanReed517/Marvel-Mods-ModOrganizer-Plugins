@@ -48,7 +48,7 @@ class MUA1ModDataChecker(mobase.ModDataChecker):
 class MarvelUltimateAllianceGame(BasicGame):
     Name = "Marvel - Ultimate Alliance Support Plugin"
     Author = "MrKablamm0fish, ak2yny, Rampage, and BaconWizard17"
-    Version = "2.0.1"
+    Version = "2.1.0"
 
     GameName = "Marvel - Ultimate Alliance"
     GameShortName = "mua1"
