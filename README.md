@@ -15,4 +15,5 @@ For more details, see the [MUA1 PC Mod Installation Guide - MO2 Method](https://
 - MUA1 Steam Support Plugin: BaconWizard17
 - MUA2 Steam Support Plugin: BaconWizard17
 - Qt6 Compatibility Updates: JordanLeich/Rampgage and ak2yny
+- Folder Structure Support: ak2yny
 - Readme: BaconWizard17
