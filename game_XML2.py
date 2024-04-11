@@ -12,26 +12,26 @@ class XML2ModDataChecker(mobase.ModDataChecker):
     def __init__(self):
         super().__init__()
         self.validDirNames = [
-            "Actors",
-            "Automaps",
-            "Conversations",
-            "Data",
-            "Dialogs",
-            "Effects",
-            "HUD",
-            "Maps",
-            "Models",
-            "MotionPaths",
-            "Movies",
-            "Packages",
+            "actors",
+            "automaps",
+            "conversations",
+            "data",
+            "dialogs",
+            "effects",
+            "hud",
+            "maps",
+            "models",
+            "motionpaths",
+            "movies",
+            "packages",
             "plugins",
-            "Scripts",
-            "Skybox",
-            "Sounds",
-            "Subtitles",
-            "Texs",
-            "Textures",
-            "UI"
+            "scripts",
+            "skybox",
+            "sounds",
+            "subtitles",
+            "texs",
+            "textures",
+            "ui"
         ]
 
     def dataLooksValid(
