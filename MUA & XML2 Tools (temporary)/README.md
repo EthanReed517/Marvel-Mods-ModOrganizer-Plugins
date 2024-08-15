@@ -7,3 +7,4 @@ These plugins go into `plugins` directly. The usual location is `C:\Modding\MO2\
 
 #### Notes:
 - These plugins should be combined with the game plugins for easier installation (game_MUA1.py and game_XML2.py only).
+- Instructions in the Mod Installation Guide have to be changed first, however.
