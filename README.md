@@ -6,14 +6,14 @@ XML2 PC, MUA1 PC, MUA1 Steam PC, MUA2 Steam PC
 
 ## Usage
 
- 1. Add the files to your MO2 install at `plugins\basic_games\games`. The usual install location is `C:\Modding\MO2\`. ModOrganizer will now be able to recognize the PC versions of XML2 and MUA1, as well as the Steam versions of MUA1 and MUA2.
-For more details, see the [MUA1 PC Mod Installation Guide - MO2 Method](https://marvelmods.com/forum/index.php/topic,10809.0.html) or the XML2 PC Mod Installation Guide - MO2 Method (coming soon!)
+ 1. Add the files to your MO2 install at `plugins\basic_games\games`. The usual location is `C:\Modding\MO2\plugins\basic_games\games`. After (re-)starting ModOrganizer, it will now be able to recognize the PC versions of XML2 and MUA1, as well as the Steam versions of MUA1 and MUA2.
+For more details, see the [MUA1 PC Mod Installation Guide - MO2 Method](https://marvelmods.com/forum/index.php?msg=203635) or the [XML2 PC Mod Installation Guide - MO2 Method](https://marvelmods.com/forum/index.php?msg=203640).
 
 ## Credits
 - XML2 Support Plugin: UltraMegaMagnus and BaconWizard17
 - MUA1 Support Plugin: MrKablamm0fish and BaconWizard17
 - MUA1 Steam Support Plugin: BaconWizard17
 - MUA2 Steam Support Plugin: BaconWizard17
-- Qt6 Compatibility Updates: JordanLeich/Rampgage and ak2yny
+- Compatibility Updates: JordanLeich/Rampgage and ak2yny
 - Folder Structure Support: ak2yny
 - Readme: BaconWizard17
