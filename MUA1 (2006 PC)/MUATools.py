@@ -29,7 +29,7 @@ P_VERSION = mobase.VersionInfo(1, 0, 1, 0)
 #return mobase.VersionInfo(1, 0, 0, mobase.ReleaseType.FINAL)
 P_REQ = {
     "BasicGame",
-    "Marvel Ultimate Alliance" # "Marvel - Ultimate Alliance"
+    "Marvel - Ultimate Alliance" # "Marvel - Ultimate Alliance"
 }
 P_ICON = "MUA.ico"
 
