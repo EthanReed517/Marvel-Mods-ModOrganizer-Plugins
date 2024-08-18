@@ -47,7 +47,7 @@ class MarvelUltimateAllianceGame(BasicGame):
     Author = "MrKablamm0fish, ak2yny, Rampage, and BaconWizard17"
     Version = "2.1.0"
 
-    GameName = "Marvel Ultimate Alliance"
+    GameName = "Marvel - Ultimate Alliance"
     GameShortName = "mua1"
     GameNexusName = "mua1"
     GameNexusId = 000
