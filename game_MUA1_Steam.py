@@ -1,9 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-try:
-  from PyQt5.QtCore import QFileInfo
-except:
-  from PyQt6.QtCore import QFileInfo
+from PyQt6.QtCore import QFileInfo
 
 import mobase
 from ..basic_game import BasicGame
@@ -66,7 +63,7 @@ class MarvelUltimateAllianceGame(BasicGame):
 
     def init(self, organizer: mobase.IOrganizer) -> bool:
         super().init(organizer)
-        self._featureMap[mobase.ModDataChecker] = MUA1ModDataChecker()
+        self._register_feature(MUA1ModDataChecker())
         return True
 
     def executables(self):

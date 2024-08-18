@@ -1,9 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-try:
-  from PyQt5.QtCore import QFileInfo
-except:
-  from PyQt6.QtCore import QFileInfo
+from PyQt6.QtCore import QFileInfo
 
 import mobase
 from ..basic_game import BasicGame
@@ -50,7 +47,7 @@ class MarvelUltimateAllianceGame(BasicGame):
     Author = "MrKablamm0fish, ak2yny, Rampage, and BaconWizard17"
     Version = "2.1.0"
 
-    GameName = "Marvel - Ultimate Alliance"
+    GameName = "Marvel Ultimate Alliance"
     GameShortName = "mua1"
     GameNexusName = "mua1"
     GameNexusId = 000
@@ -64,7 +61,7 @@ class MarvelUltimateAllianceGame(BasicGame):
 
     def init(self, organizer: mobase.IOrganizer) -> bool:
         super().init(organizer)
-        self._featureMap[mobase.ModDataChecker] = MUA1ModDataChecker()
+        self._register_feature(MUA1ModDataChecker())
         return True
 
     def executables(self):
