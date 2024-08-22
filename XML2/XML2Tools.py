@@ -44,7 +44,7 @@ MSG_MODFOLDER = tr("The herostat mod was not specified. The tool will now exit."
 MSG_BROKEN_T = tr("Broken game")
 MSG_BROKEN = tr("No new_game.py file found. Is the game setup broken? A re-installation of XML2 or new setup of MO2 might be required.")
 MSG_ACCESS_T = tr("Access error")
-MSG_ACCESS = tr("Extraction of the patch files failed. Please follow the tutorials and ask for help, if necessary.")
+MSG_ACCESS = tr("Extraction of the patch files failed. Please follow the tutorials and ask for help if necessary.")
 
 class UnknownOutputPreferenceException(Exception):
     """Thrown if the user hasn't specified whether to output to a separate mod"""
@@ -95,7 +95,7 @@ class XML2Tools(mobase.IPluginTool):
         return tr("XML2 Patch All")
 
     def tooltip(self):
-        return tr("Patches the game, so it starts and OHS works as expected.")
+        return tr("Patches the game so that it starts and OHS works as expected.")
 
     def icon(self):
         return QIcon(self.__organizer.managedGame().dataDirectory().absoluteFilePath(P_ICON))
@@ -178,7 +178,7 @@ class XML2PatchRH(mobase.IPluginTool):
         return tr("XML2 Patch RH")
 
     def tooltip(self):
-        return tr("Patches the game, so it starts.")
+        return tr("Patches the game so that it starts.")
 
     def icon(self):
         return QIcon(self.__organizer.managedGame().dataDirectory().absoluteFilePath(P_ICON))
@@ -237,7 +237,7 @@ class XML2PatchHerostat(mobase.IPluginTool):
         return tr("XML2 Patch Herostat Mod")
 
     def tooltip(self):
-        return tr("Patches the herostat mod, so OHS works as expected.")
+        return tr("Patches the herostat mod so that OHS works as expected.")
 
     def icon(self):
         return QIcon(self.__organizer.managedGame().dataDirectory().absoluteFilePath(P_ICON))

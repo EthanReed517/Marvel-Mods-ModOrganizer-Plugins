@@ -44,7 +44,7 @@ MSG_MODFOLDER = tr("The herostat mod was not specified. The tool will now exit."
 MSG_BROKEN_T = tr("Broken game")
 MSG_BROKEN = tr("No new_game.py file found. Is the game setup broken? A re-installation of MUA or new setup of MO2 might be required.")
 MSG_ACCESS_T = tr("Access error")
-MSG_ACCESS = tr("Extraction of the patch files failed. Please follow the tutorials and ask for help, if necessary.")
+MSG_ACCESS = tr("Extraction of the patch files failed. Please follow the tutorials and ask for help if necessary.")
 
 class UnknownOutputPreferenceException(Exception):
     """Thrown if the user hasn't specified whether to output to a separate mod"""
@@ -75,7 +75,7 @@ class MUATools(mobase.IPluginTool):
         return P_AUTHOR
 
     def description(self):
-        return tr("Patch the game for use with MO2, OHS and the roster hacks.")
+        return tr("Patch the game for use with MO2, OHS, and the roster hacks.")
 
     def version(self):
         return P_VERSION
@@ -95,7 +95,7 @@ class MUATools(mobase.IPluginTool):
         return tr("MUA Patch All")
 
     def tooltip(self):
-        return tr("Patches the game, so the roster hacks, debug menu and OHS work as expected.")
+        return tr("Patches the game, so that the roster hacks, debug menu, and OHS work as expected.")
 
     def icon(self):
         return QIcon(self.__organizer.managedGame().dataDirectory().absoluteFilePath(P_ICON))
@@ -152,10 +152,10 @@ class MUAPatchRH(mobase.IPluginTool):
         return True
 
     def name(self):
-        return "MUA Patch RH"
+        return "MUA Patch Roster Hack"
 
     def localizedName(self):
-        return tr("MUA Patch RH")
+        return tr("MUA Patch Roster Hack")
 
     def author(self):
         return P_AUTHOR
@@ -175,10 +175,10 @@ class MUAPatchRH(mobase.IPluginTool):
         return []
 
     def displayName(self):
-        return tr("MUA Patch RH")
+        return tr("MUA Patch Roster Hack")
 
     def tooltip(self):
-        return tr("Patches the game, so the roster hacks and debug menu work as expected.")
+        return tr("Patches the game so that the roster hacks and debug menu work as expected.")
 
     def icon(self):
         return QIcon(self.__organizer.managedGame().dataDirectory().absoluteFilePath(P_ICON))
@@ -237,7 +237,7 @@ class MUAPatchHerostat(mobase.IPluginTool):
         return tr("MUA Patch Herostat Mod")
 
     def tooltip(self):
-        return tr("Patches the herostat mod, so OHS works as expected.")
+        return tr("Patches the herostat mod so that OHS works as expected.")
 
     def icon(self):
         return QIcon(self.__organizer.managedGame().dataDirectory().absoluteFilePath(P_ICON))
