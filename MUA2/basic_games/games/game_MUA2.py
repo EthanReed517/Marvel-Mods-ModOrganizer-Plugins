@@ -53,7 +53,7 @@ class MarvelUltimateAllianceGame(BasicGame):
 
     GameName = "Marvel - Ultimate Alliance 2"
     GameShortName = "mua2"
-    GameNexusName = "mua2"
+    GameNexusName = "marvelultimatealliance2"
     GameNexusId = 000
     GameSteamId = 433320
     GameBinary = "alliance.exe"
