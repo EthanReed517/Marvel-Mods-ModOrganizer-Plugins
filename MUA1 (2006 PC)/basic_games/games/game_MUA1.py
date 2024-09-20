@@ -1,9 +1,17 @@
 # -*- encoding: utf-8 -*-
+from collections.abc import Mapping
+from pathlib import Path
 
-from PyQt6.QtCore import QFileInfo
+from PyQt6.QtCore import QFileInfo, QDateTime, QDir
 
 import mobase
 from ..basic_game import BasicGame
+from ..basic_features import BasicLocalSavegames
+from ..basic_features.basic_save_game_info import (
+    BasicGameSaveGame,
+    BasicGameSaveGameInfo,
+    format_date,
+)
 
 class MUA1ModDataChecker(mobase.ModDataChecker):
     def __init__(self):
@@ -42,10 +50,57 @@ class MUA1ModDataChecker(mobase.ModDataChecker):
                 return mobase.ModDataChecker.VALID
         return mobase.ModDataChecker.INVALID
 
+class MUA1SaveGame(BasicGameSaveGame):
+    def __init__(self, filepath: Path):
+        super().__init__(filepath)
+
+        head_length = 0x00000080
+        size_length = 0x00000004
+
+        with open(self._filepath, "rb") as sbin:
+            head = sbin.read(head_length).split(b'\x00')[0].decode()
+            # size = int.from_bytes(sbin.read(size_length), "little")
+            # save = sbin.read(size)
+            # sbin.close()
+        # info = save.split(b'\x0a')[1].split(b'\x00')[0].decode()
+
+        self._name = head.split(' - ')[1].split('(')[0].strip()
+        self._difficulty = head.split()[-1][1:-1]
+        self._elapsed = head.split(' - ')[0]
+        f_stat = self._filepath.stat()
+        self._created = f_stat.st_birthtime
+        self._modified = f_stat.st_mtime
+
+    def getName(self) -> str:
+        return self._name
+
+    def getCreationTime(self) -> QDateTime:
+        return QDateTime.fromSecsSinceEpoch(int(self._created))
+
+    def getModifiedTime(self) -> QDateTime:
+        return QDateTime.fromSecsSinceEpoch(int(self._modified))
+
+    def getDifficulty(self) -> str:
+        return self._difficulty
+
+    def getElapsed(self) -> str:
+        return self._elapsed
+
+def getMetadata(savepath: Path, save: mobase.ISaveGame) -> Mapping[str, str]:
+    assert isinstance(save, MUA1SaveGame)
+    return {
+        "Extraction Point": save.getName(),
+        "Difficulty": save.getDifficulty(),
+        "Last Saved": format_date(save.getModifiedTime()),
+        "Created At": format_date(save.getCreationTime()),
+        "Elapsed time": save.getElapsed(),
+    }
+
+
 class MarvelUltimateAllianceGame(BasicGame):
     Name = "Marvel - Ultimate Alliance Support Plugin"
     Author = "MrKablamm0fish, ak2yny, Rampage, and BaconWizard17"
-    Version = "2.1.0"
+    Version = "2.2.0"
 
     GameName = "Marvel - Ultimate Alliance"
     GameShortName = "mua1"
@@ -55,13 +110,18 @@ class MarvelUltimateAllianceGame(BasicGame):
     GameBinary = "game.exe"
     GameLauncher = "MUA.exe"
     GameDataPath = ""
-    GameSaveExtension = "save"
     GameDocumentsDirectory = "%DOCUMENTS%/Activision/Marvel Ultimate Alliance"
     GameSavesDirectory = "%GAME_DOCUMENTS%/Save"
+    GameSaveExtension = "save"
+    GameSupportURL = "https://github.com/EthanReed517/Marvel-Mods-ModOrganizer-Plugins"
 
     def init(self, organizer: mobase.IOrganizer) -> bool:
         super().init(organizer)
         self._register_feature(MUA1ModDataChecker())
+        self._register_feature(BasicLocalSavegames(self.savesDirectory()))
+        self._register_feature(
+            BasicGameSaveGameInfo(get_metadata=getMetadata, max_width=400)
+        )
         return True
 
     def executables(self):
@@ -70,5 +130,11 @@ class MarvelUltimateAllianceGame(BasicGame):
                 "Marvel: Ultimate Alliance",
                 QFileInfo(self.gameDirectory(), "game.exe"),
             ),
+        ]
+
+    def listSaves(self, folder: QDir) -> list[mobase.ISaveGame]:
+        ext = self._mappings.savegameExtension.get()
+        return [
+            MUA1SaveGame(path) for path in Path(folder.absolutePath()).glob(f"*.{ext}") # e.g. saveslot0.save
         ]
 

@@ -49,17 +49,18 @@ class MUA2ModDataChecker(mobase.ModDataChecker):
 class MarvelUltimateAllianceGame(BasicGame):
     Name = "Marvel - Ultimate Alliance 2 Support Plugin"
     Author = "MrKablamm0fish, ak2yny, Rampage, and BaconWizard17"
-    Version = "2.1.0"
+    Version = "2.2.0"
 
     GameName = "Marvel - Ultimate Alliance 2"
     GameShortName = "mua2"
     GameNexusName = "marvelultimatealliance2"
-    GameNexusId = 000
+    GameNexusId = 6330
     GameSteamId = 433320
     GameBinary = "alliance.exe"
     GameDataPath = ""
     GameSaveExtension = "sav"
     GameSavesDirectory = "%GAME_PATH%/SavesDir"
+    GameSupportURL = "https://github.com/EthanReed517/Marvel-Mods-ModOrganizer-Plugins"
 
     def init(self, organizer: mobase.IOrganizer) -> bool:
         super().init(organizer)

@@ -48,7 +48,7 @@ class MUA1ModDataChecker(mobase.ModDataChecker):
 class MarvelUltimateAllianceGame(BasicGame):
     Name = "Marvel - Ultimate Alliance (Steam Version) Support Plugin"
     Author = "MrKablamm0fish, ak2yny, Rampage, and BaconWizard17"
-    Version = "2.1.0"
+    Version = "2.2.0"
 
     GameName = "Marvel - Ultimate Alliance (Steam)"
     GameShortName = "mua1s"
@@ -60,6 +60,7 @@ class MarvelUltimateAllianceGame(BasicGame):
     GameSaveExtension = "sav"
     GameDocumentsDirectory = "%USERPROFILE%/AppData/Roaming/Activision/Marvel Ultimate Alliance"
     GameSavesDirectory = "%GAME_PATH%/SavesDir"
+    GameSupportURL = "https://github.com/EthanReed517/Marvel-Mods-ModOrganizer-Plugins"
 
     def init(self, organizer: mobase.IOrganizer) -> bool:
         super().init(organizer)
