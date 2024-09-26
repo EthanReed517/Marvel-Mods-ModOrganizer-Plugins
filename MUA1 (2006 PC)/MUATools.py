@@ -9,15 +9,13 @@
 
 from pathlib import Path
 from typing import List
+import sys, time, zipfile
 
 from PyQt6.QtCore import qCritical, QFileInfo #, QCoreApplication
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QFileDialog, QMessageBox
 
-import sys
 import mobase
-import zipfile
-import time
 
 # If the patch files would be used from remote sources, we could use the urllib
 # import urllib.request
@@ -25,7 +23,7 @@ import time
 P_NAME = "MUA Tools"
 P_HSPATCH = "MUA Patch Hs"
 P_AUTHOR = "ak2yny"
-P_VERSION = mobase.VersionInfo(1, 0, 1, 0)
+P_VERSION = mobase.VersionInfo(1, 1, 0, 0)
 #return mobase.VersionInfo(1, 0, 0, mobase.ReleaseType.FINAL)
 P_REQ = {
     "BasicGame",
@@ -122,11 +120,7 @@ class MUATools(mobase.IPluginTool):
             self.__organizer.modList().setPriority(herostatModPath.name, modCount)
 
             # Copy the new_game that's used by this profile, currently
-            parent = Path('scripts/menus').as_posix()
-            files = self.__organizer.findFiles(parent, 'new_game.py')
-            if files:
-                patchHerostatMod(herostatModPath, Path(files[0]))
-            else:
+            if not patchHerostatMod(self.__organizer, herostatModPath):
                 QMessageBox.critical(self.__parentWidget, MSG_BROKEN_T, MSG_BROKEN)
                 return
 
@@ -257,38 +251,39 @@ class MUAPatchHerostat(mobase.IPluginTool):
         self.__organizer.setPluginSetting(self.name(), "initialised", True)
         time.sleep(0.2)
 
+        # Copy the new_game that's used by this profile, currently
+        if not patchHerostatMod(self.__organizer, herostatModPath):
+            QMessageBox.critical(self.__parentWidget, MSG_BROKEN_T, MSG_BROKEN)
+            return
+
         # Enable the herostat mod
         self.__organizer.modList().setActive(herostatModPath.name, True)
         modCount = len(self.__organizer.modList().allMods())
         self.__organizer.modList().setPriority(herostatModPath.name, modCount)
 
-        # Copy the new_game that's used by this profile, currently
-        parent = Path('scripts/menus').as_posix()
-        files = self.__organizer.findFiles(parent, 'new_game.py')
-        if files:
-            patchHerostatMod(herostatModPath, Path(files[0]))
-        else:
-            QMessageBox.critical(self.__parentWidget, MSG_BROKEN_T, MSG_BROKEN)
-            return
-
         QMessageBox.information(self.__parentWidget, tr("Success!"), tr("Herostat mod patched successfully."))
 
 def patchGameFolder(gamePath: str):
-    # zip_file, headers = urllib.request.urlretrieve('https://github.com/.../.../releases/latest/download/....zip')
+    # zip_file, headers = urllib.request.urlretrieve('https://github.com/EthanReed517/Marvel-Mods-ModOrganizer-Plugins/raw/refs/heads/main/MUA1%20(2006%20PC)/MUAPatch.zip')
     zip_file = "plugins/MUAPatch.zip"
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         zip_ref.extractall(gamePath)
     # urllib.request.urlcleanup()
 
-def patchHerostatMod(herostatMod: Path, oldNewGame: Path):
+def patchHerostatMod(mo, herostatMod: Path) -> bool:
+    newNewGame_BKP = herostatMod / 'scripts' / 'menus' / 'new_game.backup.py'
     newNewGame = herostatMod / 'scripts' / 'menus' / 'new_game.py'
-    newNewGame.parent.mkdir(parents=True, exist_ok=True)
-    newNewGame.write_bytes(oldNewGame.read_bytes())
+    if newNewGame.exists(): newNewGame.replace(newNewGame_BKP)
+    else: newNewGame.parent.mkdir(parents=True, exist_ok=True)
+    files = mo.findFiles(Path('scripts/menus').as_posix(), 'new_game.py')
+    if not files: return False
+    newNewGame.write_bytes(Path(files[0]).read_bytes())
     # Make sure a 'data' folder exist
     dataPath = herostatMod / 'data'
     dataPath.mkdir(exist_ok=True)
+    return True
 
-def getOutputPath(mo, widget):
+def getOutputPath(mo, widget) -> Path:
     path = mo.pluginSetting(P_HSPATCH, "output-path") if bool(mo.pluginSetting(P_HSPATCH, "initialised")) else ""
     pathlibPath = Path(path)
     modDirectory = mo.modsPath()
@@ -305,9 +300,13 @@ def getOutputPath(mo, widget):
             if not isAMod:
                 QMessageBox.information(widget, tr("Not a mod..."), tr("The selected directory is not a Mod Organizer managed mod. Please choose a directory within the mods directory."))
                 continue
-        # The user may have created a new mod in the MO2 mods directory, so we must trigger a refresh
-        mo.refreshModList()
-        mo.setPluginSetting(P_HSPATCH, "output-path", path)
+
+    # Disable the herostat mod temporarily to fix the VFS
+    mo.modList().setActive(pathlibPath.name, True)
+
+    # The user may have created a new mod in the MO2 mods directory, so we must trigger a refresh
+    mo.refreshModList()
+    mo.setPluginSetting(P_HSPATCH, "output-path", path)
 
     return pathlibPath
 
