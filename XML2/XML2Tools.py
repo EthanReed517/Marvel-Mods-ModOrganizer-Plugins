@@ -23,13 +23,14 @@ import mobase
 P_NAME = "XML2 Tools"
 P_HSPATCH = "XML2 Patch Hs"
 P_AUTHOR = "ak2yny"
-P_VERSION = mobase.VersionInfo(1, 1, 0, 0)
+P_VERSION = mobase.VersionInfo(1, 2, 0, 0)
 #return mobase.VersionInfo(1, 0, 0, mobase.ReleaseType.FINAL)
 P_REQ = {
     "BasicGame",
     "X-Men Legends II - Rise of Apocalypse"
 }
 P_ICON = "xml2.ico"
+ZIP_FILE = "plugins/XML2Patch.zip"
 
 def tr(str) -> str:
     #translations not implemented:
@@ -41,8 +42,12 @@ MSG_MODFOLDER_T = tr("Herostat mod not set")
 MSG_MODFOLDER = tr("The herostat mod was not specified. The tool will now exit.")
 MSG_BROKEN_T = tr("Broken game")
 MSG_BROKEN = tr("No new_game.py file found. Is the game setup broken? A re-installation of XML2 or new setup of MO2 might be required.")
+MSG_MISSING_T = tr("File not found error")
+MSG_MISSING = tr(f"The patch was not found in '{ZIP_FILE}'. Please re-install the XML2 plugin for MO2, including the patch .zip file.\nIt's possible that an anti-virus program removed the .zip. In this case, disable protection temporarily, re-install the plugin (including the patch .zip file), add the .zip to exclusions in the anti-virus and re-enable protection.")
 MSG_ACCESS_T = tr("Access error")
-MSG_ACCESS = tr("Extraction of the patch files failed. Please follow the tutorials and ask for help if necessary.")
+MSG_ACCESS = tr(f"If the game is in program files, it might help to move it to an unprotected location , such as 'C:/Games'. Otherwise, it might be possible to give MO2 and Python write access to the game folder through file explorer.\nIn any case, you can also manually extract the contents of '{ZIP_FILE}' to ")
+MSG_FAIL_T = tr("Extraction error")
+MSG_FAIL = tr("Extraction of the patch files failed. Please follow the tutorials and ask for help if necessary.")
 
 class UnknownOutputPreferenceException(Exception):
     """Thrown if the user hasn't specified whether to output to a separate mod"""
@@ -126,13 +131,16 @@ class XML2Tools(mobase.IPluginTool):
 
         if bool(self.__organizer.pluginSetting(self.name(), "patch-ex")):
             # Extract the roster hack files to the game directory
+            game_dir = self.__organizer.managedGame().dataDirectory().absolutePath()
             try:
-                patchGameFolder(self.__organizer.managedGame().dataDirectory().absolutePath())
+                patchGameFolder(game_dir)
+                QMessageBox.information(self.__parentWidget, tr("Success!"), tr("Game files patched successfully."))
+            except FileNotFoundError:
+                QMessageBox.critical(self.__parentWidget, MSG_MISSING_T, MSG_MISSING)
+            except PermissionError as e:
+                QMessageBox.critical(self.__parentWidget, MSG_ACCESS_T, f"{e}\n{MSG_ACCESS}'{game_dir}'.")
             except:
-                QMessageBox.critical(self.__parentWidget, MSG_ACCESS_T, MSG_ACCESS)
-                return
-
-        QMessageBox.information(self.__parentWidget, tr("Success!"), tr("Game files patched successfully."))
+                QMessageBox.critical(self.__parentWidget, MSG_FAIL_T, MSG_FAIL)
 
 class XML2PatchRH(mobase.IPluginTool):
 
@@ -182,13 +190,16 @@ class XML2PatchRH(mobase.IPluginTool):
 
     def display(self):
         # Extract the cracked .exe to the game directory
+        game_dir = self.__organizer.managedGame().dataDirectory().absolutePath()
         try:
-            patchGameFolder(self.__organizer.managedGame().dataDirectory().absolutePath())
+            patchGameFolder(game_dir)
+            QMessageBox.information(self.__parentWidget, tr("Success!"), tr("Game files patched successfully."))
+        except FileNotFoundError:
+            QMessageBox.critical(self.__parentWidget, MSG_MISSING_T, MSG_MISSING)
+        except PermissionError as e:
+            QMessageBox.critical(self.__parentWidget, MSG_ACCESS_T, f"{e}\n{MSG_ACCESS}'{game_dir}'.")
         except:
-            QMessageBox.critical(self.__parentWidget, MSG_ACCESS_T, MSG_ACCESS)
-            return
-
-        QMessageBox.information(self.__parentWidget, tr("Success!"), tr("Game files patched successfully."))
+            QMessageBox.critical(self.__parentWidget, MSG_FAIL_T, MSG_FAIL)
 
 class XML2PatchHerostat(mobase.IPluginTool):
 
@@ -264,9 +275,8 @@ class XML2PatchHerostat(mobase.IPluginTool):
         QMessageBox.information(self.__parentWidget, tr("Success!"), tr("Herostat mod patched successfully."))
 
 def patchGameFolder(gamePath: str):
-    # zip_file, headers = urllib.request.urlretrieve('https://github.com/EthanReed517/Marvel-Mods-ModOrganizer-Plugins/raw/refs/heads/main/XML2/XML2Patch.zip')
-    zip_file = "plugins/XML2Patch.zip"
-    with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+    # ZIP_FILE, headers = urllib.request.urlretrieve('https://github.com/EthanReed517/Marvel-Mods-ModOrganizer-Plugins/raw/refs/heads/main/XML2/XML2Patch.zip')
+    with zipfile.ZipFile(ZIP_FILE, 'r') as zip_ref:
         zip_ref.extractall(gamePath)
     # urllib.request.urlcleanup()
 
@@ -277,6 +287,7 @@ def patchHerostatMod(mo, herostatMod: Path) -> bool:
         oldNewGame = Path(p)
         newNewGame = herostatMod / 'scripts' / 'menus' / oldNewGame.name
         bkpNewGame = herostatMod / 'scripts' / 'menus' / f'{oldNewGame.name}.backup{oldNewGame.suffix}'
+        if oldNewGame == newNewGame: continue
         if newNewGame.exists(): newNewGame.replace(bkpNewGame)
         else: newNewGame.parent.mkdir(parents=True, exist_ok=True)
         newNewGame.write_bytes(oldNewGame.read_bytes())
