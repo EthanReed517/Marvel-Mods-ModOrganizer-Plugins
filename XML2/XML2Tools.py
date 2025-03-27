@@ -318,7 +318,7 @@ def getOutputPath(mo, widget) -> Path:
     mo.modList().setActive(pathlibPath.name, True)
 
     # The user may have created a new mod in the MO2 mods directory, so we must trigger a refresh
-    mo.refreshModList()
+    mo.refresh()
     mo.setPluginSetting(P_HSPATCH, "output-path", path)
 
     return pathlibPath
