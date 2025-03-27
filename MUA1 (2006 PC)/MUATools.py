@@ -43,9 +43,9 @@ MSG_MODFOLDER = tr("The herostat mod was not specified. The tool will now exit."
 MSG_BROKEN_T = tr("Broken game")
 MSG_BROKEN = tr("No new_game.py file found. Is the game setup broken? A re-installation of MUA or new setup of MO2 might be required.")
 MSG_MISSING_T = tr("File not found error")
-MSG_MISSING = tr(f"The patch was not found in '{ZIP_FILE}'. Please re-install the MUA plugin for MO2, including the patch .zip file.\nIt's possible that an anti-virus program removed the .zip. In this case, disable protection temporarily, re-install the plugin (including the patch .zip file), add the .zip to exclusions in the anti-virus and re-enable protection.")
-MSG_ACCESS_T = tr("Access error")
-MSG_ACCESS = tr(f"If the game is in program files, it might help to move it to an unprotected location , such as 'C:/Games'. Otherwise, it might be possible to give MO2 and Python write access to the game folder through file explorer.\nIn any case, you can also manually extract the contents of '{ZIP_FILE}' to ")
+MSG_MISSING = tr(f"The patch was not found in '{ZIP_FILE}'. Please re-install the MUA plugin for MO2.\nIt's possible that an anti-virus program removed the .zip. In this case, disable protection temporarily, re-install the plugin, add '{ZIP_FILE}' to exclusions in the anti-virus and re-enable protection.")
+MSG_ACCESS_T = tr("Permission denied")
+MSG_ACCESS = tr(f"This can happen, if the game is in program files, in which case it helps to move it to an unprotected location, such as 'C:/Games'. Otherwise, it might be possible to give MO2 and Python write permission to the game folder through file explorer.\It's also possible that an anti-virus program prevents the patch from working. To allow it, briefly disable protection while patching. If necessary, add the patch files in the game folder (game.exe, plugins folder, dinput8.dll) to the exceptions afterwards. Don't forget to turn protection back on.\nIn any case, you can also manually extract the contents of '{ZIP_FILE}' to ")
 MSG_FAIL_T = tr("Extraction error")
 MSG_FAIL = tr("Extraction of the patch files failed. Please follow the tutorials and ask for help if necessary.")
 
