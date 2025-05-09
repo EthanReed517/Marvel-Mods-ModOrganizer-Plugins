@@ -30,7 +30,7 @@ P_REQ = {
     "Marvel - Ultimate Alliance" # "Marvel - Ultimate Alliance"
 }
 P_ICON = "MUA.ico"
-ZIP_FILE = "plugins/MUAPatch.zip"
+ZIP_FILE = str(Path(__file__).parent / "MUAPatch.zip")
 
 def tr(str) -> str:
     #translations not implemented:

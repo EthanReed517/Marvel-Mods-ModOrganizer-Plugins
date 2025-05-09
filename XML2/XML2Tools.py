@@ -30,7 +30,7 @@ P_REQ = {
     "X-Men Legends II - Rise of Apocalypse"
 }
 P_ICON = "xml2.ico"
-ZIP_FILE = "plugins/XML2Patch.zip"
+ZIP_FILE = str(Path(__file__).parent / "XML2Patch.zip")
 
 def tr(str) -> str:
     #translations not implemented:
